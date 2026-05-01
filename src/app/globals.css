@@ -16,6 +16,7 @@ body {
   padding: 0;
   overflow-x: hidden;
 
+
   color: var(--foreground);
 
   background: linear-gradient(to bottom,
@@ -196,8 +197,8 @@ body {
       #f9feff 80%,
       #ffffff 100%);
 
-  width: 100vw;
-  margin-left: calc(-50vw + 50%);
+  width: 100%;
+  margin-left: 0;
 }
 
 /* TEXT */

@@ -17,18 +17,13 @@ export const CanvasScroller = ({ frames, containerRef }: Props) => {
     offset: ["start start", "end end"]
   });
 
-  /** * 2. THE FIX: MAP THE SCROLL
-   * We want the animation to finish by the time the user scrolls 40% of the way.
-   * From 0% to 40% scroll -> Frames go 0 to 1263.
-   * From 40% to 100% scroll -> Frame stays at 1263.
-   */
   const smoothProgress = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
   const frameIndex = useTransform(
     smoothProgress,
-    [0, 0.4], // Animation finishes at 40% scroll depth
-    [0, frames.length - 1],
-    { clamp: true } // THIS IS CRITICAL: Keeps it at the last frame
+    [0, 0.45, 0.75, 0.99],
+    [0, 580, 948, frames.length - 1],
+    { clamp: true }
   );
 
   useEffect(() => {
@@ -106,7 +101,7 @@ export const CanvasScroller = ({ frames, containerRef }: Props) => {
     <div className="fixed inset-0 z-0 pointer-events-none">
       <canvas
         ref={canvasRef}
-        className="h-full w-full object-cover brightness-[0.5]"
+        className="h-full w-full object-cover brightness-[0.80]"
       />
     </div>
   );

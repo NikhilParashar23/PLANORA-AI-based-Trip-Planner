@@ -9,6 +9,23 @@ import {
   Trees, Music, Backpack, Utensils, HeartPulse,
   Camera, Users
 } from "lucide-react";
+import { MapPin, Plane, Calendar, Clock } from "lucide-react";
+import { Hotel, Bus, UtensilsCrossed, CloudSun, FileText } from "lucide-react";
+
+const PREF_ICONS = {
+  accommodation: Hotel,
+  transport: Bus,
+  diet: UtensilsCrossed,
+  weather: CloudSun,
+  notes: FileText
+};
+
+const WHERE_WHEN_ICONS = {
+  destination: MapPin,
+  from: Plane,
+  startDate: Calendar,
+  days: Clock
+};
 
 const formSchema = z.object({
   destination: z.string().min(1, 'Destination is required'),
@@ -97,6 +114,33 @@ export const ItineraryEngine = () => {
     setTimeout(() => resultsRef.current?.scrollIntoView({ behavior: 'smooth' }), 100);
   };
 
+  //New changes 
+  const InputWithIcon = ({ icon: Icon, ...props }) => {
+    return (
+      <div style={{ position: "relative" }}>
+        <Icon
+          size={16}
+          style={{
+            position: "absolute",
+            left: "12px",
+            top: "50%",
+            transform: "translateY(-50%)",
+            color: "rgba(10,31,44,0.5)"
+          }}
+        />
+
+        <input
+          className="inp"
+          style={{
+            ...inputStyle,
+            paddingLeft: "38px"
+          }}
+          {...props}
+        />
+      </div>
+    );
+  };
+
   return (
     <div
       className="itinerary-bg"
@@ -122,7 +166,7 @@ export const ItineraryEngine = () => {
         width: '100%',
         display: 'flex',
         flexDirection: 'column',
-        alignItems: 'center'
+        alignItems: 'center',
       }}>
 
         {/* HERO */}
@@ -132,8 +176,9 @@ export const ItineraryEngine = () => {
           maxWidth: '680px'
         }}>
           <h1 style={{
-            fontSize: '2.6rem',
-            fontWeight: 600,
+            fontFamily: 'serif',
+            fontSize: '3.5rem',
+            fontWeight: 400,
             color: '#0A1F2C'
           }}>
             Plan Your Dream Trip 🌴
@@ -162,47 +207,47 @@ export const ItineraryEngine = () => {
             <div style={gridStyle}>
 
               <Field label="Destination">
-                <input
-                  className="inp"
-                  placeholder="Where to?"
-                  style={inputStyle}
+                <InputWithIcon
+                  icon={WHERE_WHEN_ICONS.destination}
                   {...register("destination")}
+                  placeholder="Where to?"
                 />
               </Field>
 
               <Field label="Travelling from">
-                <input
-                  className="inp"
-                  style={inputStyle}
+                <InputWithIcon
+                  icon={WHERE_WHEN_ICONS.from}
                   {...register("from")}
+                  placeholder="From Where?"
                 />
               </Field>
 
               <Field label="Start date">
-                <input
+                <InputWithIcon
+                  icon={WHERE_WHEN_ICONS.startDate}
                   type="date"
-                  className="inp"
-                  style={inputStyle}
                   {...register("startDate")}
                 />
               </Field>
 
               <Field label="Number of days">
-                <input
+                <InputWithIcon
+                  icon={WHERE_WHEN_ICONS.days}
                   type="number"
-                  className="inp"
-                  style={inputStyle}
+                  min={1}
+                  step={1}
                   {...register("days", { valueAsNumber: true })}
+                  placeholder="e.g. 3 days"
                 />
               </Field>
 
             </div>
-
             <SectionLabel>👥 Travellers & Budget</SectionLabel>
 
             <div style={gridStyle}>
               <Field label="Travellers">
                 <div style={stepperStyle}>
+
                   <button
                     type="button"
                     onClick={() => setValue('travellers', Math.max(1, peopleValue - 1))}
@@ -211,7 +256,11 @@ export const ItineraryEngine = () => {
                     −
                   </button>
 
-                  <span style={{ fontSize: '16px', fontWeight: 500 }}>
+                  <span style={{
+                    fontSize: '14px',
+                    fontWeight: 500,
+                    color: '#0A1F2C'
+                  }}>
                     {peopleValue}
                   </span>
 
@@ -222,6 +271,7 @@ export const ItineraryEngine = () => {
                   >
                     +
                   </button>
+
                 </div>
               </Field>
 
@@ -248,55 +298,226 @@ export const ItineraryEngine = () => {
 
             <SectionLabel>🌿 Travel Style</SectionLabel>
 
-            {/* AIRBNB STYLE CHIPS */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              maxWidth: '100%'
-            }}>
-              {STYLES.map(s => {
-                const Icon = STYLE_ICONS[s];
-                const active = selectedStyles.has(s);
+            <div style={{ position: 'relative', width: '100%' }}>
 
-                return (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => toggleStyle(s)}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '8px',
-                      padding: '10px 18px',
-                      borderRadius: '999px',
-                      border: active
-                        ? '1px solid #3BA4A6'
-                        : '1px solid rgba(10,31,44,0.15)',
-                      background: active ? '#3BA4A6' : '#fff',
-                      color: active ? '#fff' : '#0A1F2C',
-                      fontSize: '14px', // 👈 increased
-                      fontWeight: 500,
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease',
-                      boxShadow: active
-                        ? '0 6px 18px rgba(59,164,166,0.3)'
-                        : '0 2px 6px rgba(0,0,0,0.05)'
-                    }}
-                    onMouseEnter={e => {
-                      if (!active) {
-                        e.currentTarget.style.transform = 'scale(1.05)';
-                      }
-                    }}
-                    onMouseLeave={e => {
-                      e.currentTarget.style.transform = 'scale(1)';
-                    }}
-                  >
-                    <Icon size={16} />
-                    {s}
-                  </button>
-                );
-              })}
+              {/* SCROLL ROW */}
+              <div
+                style={{
+                  display: 'flex',
+                  gap: '14px',
+                  overflowX: 'auto',
+                  paddingBottom: '6px',
+
+                  /* smooth scroll */
+                  scrollBehavior: 'smooth',
+
+                  /* prevent wrapping */
+                  whiteSpace: 'nowrap',
+
+                  /* hide scrollbar (important) */
+                  scrollbarWidth: 'none',
+                  msOverflowStyle: 'none'
+                }}
+                className="no-scrollbar"
+              >
+                {STYLES.map(s => {
+                  const Icon = STYLE_ICONS[s];
+                  const active = selectedStyles.has(s);
+
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => toggleStyle(s)}
+                      style={{
+                        /* ✅ FIXED WIDTH FOR SCROLL */
+                        minWidth: '84px',
+                        height: '84px',
+                        flexShrink: 0,
+
+                        borderRadius: '16px',
+
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '6px',
+
+                        background: active ? '#E8F7F7' : '#fff',
+                        border: active
+                          ? '1.5px solid #3BA4A6'
+                          : '1px solid rgba(10,31,44,0.12)',
+
+                        color: active ? '#1E5F74' : '#0A1F2C',
+
+                        fontSize: '12px',
+                        fontWeight: 500,
+
+                        cursor: 'pointer',
+                        transition: 'all 0.25s ease',
+
+                        boxShadow: active
+                          ? '0 6px 16px rgba(59,164,166,0.25)'
+                          : '0 2px 6px rgba(0,0,0,0.05)'
+                      }}
+                      onMouseEnter={e => {
+                        if (!active) e.currentTarget.style.transform = 'translateY(-3px)';
+                      }}
+                      onMouseLeave={e => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                      }}
+                    >
+                      <Icon size={20} />
+                      <span>{s}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+            {/* PREFERENCES */}
+            <div style={{ position: 'relative', width: '100%' }}>
+              <SectionLabel>⚙️ Preferences</SectionLabel>
+
+              <div style={gridStyle}>
+
+                <Field label="Accommodation">
+                  <div style={{ position: "relative" }}>
+                    <PREF_ICONS.accommodation
+                      size={16}
+                      style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "rgba(10,31,44,0.5)"
+                      }}
+                    />
+                    <select
+                      className="inp"
+                      style={{ ...inputStyle, paddingLeft: "38px" }}
+                      {...register("accommodation")}
+                    >
+                      {['Hotel', 'Villa', 'Resort', 'Hostel', 'Camping'].map(o => (
+                        <option key={o}>{o}</option>
+                      ))}
+                    </select>
+                  </div>
+                </Field>
+
+                <Field label="Transport">
+                  <div style={{ position: "relative" }}>
+                    <PREF_ICONS.transport
+                      size={16}
+                      style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "rgba(10,31,44,0.5)"
+                      }}
+                    />
+                    <select
+                      className="inp"
+                      style={{ ...inputStyle, paddingLeft: "38px" }}
+                      {...register("transport")}
+                    >
+                      {['Car', 'Bike', 'Public Transport', 'Flight', 'Train', 'Boat'].map(o => (
+                        <option key={o}>{o}</option>
+                      ))}
+                    </select>
+                  </div>
+                </Field>
+
+                <Field label="Diet">
+                  <div style={{ position: "relative" }}>
+                    <PREF_ICONS.diet
+                      size={16}
+                      style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "rgba(10,31,44,0.5)"
+                      }}
+                    />
+                    <select
+                      className="inp"
+                      style={{ ...inputStyle, paddingLeft: "38px" }}
+                      {...register("diet")}
+                    >
+                      {['Veg', 'Non-Veg', 'Vegan', 'Jain'].map(o => (
+                        <option key={o}>{o}</option>
+                      ))}
+                    </select>
+                  </div>
+                </Field>
+
+                <Field label="Weather">
+                  <div style={{ position: "relative" }}>
+                    <PREF_ICONS.weather
+                      size={16}
+                      style={{
+                        position: "absolute",
+                        left: "12px",
+                        top: "50%",
+                        transform: "translateY(-50%)",
+                        color: "rgba(10,31,44,0.5)"
+                      }}
+                    />
+                    <select
+                      className="inp"
+                      style={{ ...inputStyle, paddingLeft: "38px" }}
+                      {...register("weather")}
+                    >
+                      <option value="">Any</option>
+                      {['Sunny', 'Cold', 'Rainy'].map(o => (
+                        <option key={o}>{o}</option>
+                      ))}
+                    </select>
+                  </div>
+                </Field>
+
+                {/* FULL WIDTH NOTES */}
+                <div style={{ gridColumn: 'span 2' }}>
+                  <Field label="Anything else?">
+                    <div style={{ position: "relative" }}>
+                      <PREF_ICONS.notes
+                        size={16}
+                        style={{
+                          position: "absolute",
+                          left: "12px",
+                          top: "14px",
+                          color: "rgba(10,31,44,0.5)"
+                        }}
+                      />
+                      <textarea
+                        className="inp"
+                        placeholder="Special requests, must visit places, accessibility..."
+                        style={{
+                          ...inputStyle,
+                          paddingLeft: "38px",
+                          width: "94%",
+                          resize: "none"
+                        }}
+                        {...register("notes")}
+                      />
+                    </div>
+                  </Field>
+                </div>
+
+              </div>
+
+              {/* RIGHT FADE EFFECT */}
+              <div style={{
+                position: 'absolute',
+                right: 0,
+                top: 0,
+                height: '100%',
+                width: '40px',
+                pointerEvents: 'none',
+                background: 'linear-gradient(to left, white, transparent)'
+              }} />
+
             </div>
 
             <button
@@ -337,8 +558,8 @@ export const ItineraryEngine = () => {
           )}
         </div>
 
-      </div>
-    </div>
+      </div >
+    </div >
   );
 };
 
@@ -400,21 +621,26 @@ const stepperStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  borderRadius: '999px',
+  borderRadius: '14px',
   border: '1px solid rgba(10,31,44,0.15)',
   padding: '6px 10px',
   background: '#fff'
 };
 
 const stepBtn: React.CSSProperties = {
-  width: '34px',
-  height: '34px',
-  borderRadius: '50%',
-  border: '1px solid rgba(10,31,44,0.2)',
-  background: '#fff',
+  width: '32px',
+  height: '32px',
+  borderRadius: '8px',
+  border: '1px solid rgba(10,31,44,0.15)',
+  background: '#ffffff',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
   cursor: 'pointer',
   fontSize: '16px',
-  transition: '0.2s'
+  fontWeight: 500,
+  color: '#0A1F2C',
+  transition: 'all 0.2s ease'
 };
 
 const sliderStyle: React.CSSProperties = {
