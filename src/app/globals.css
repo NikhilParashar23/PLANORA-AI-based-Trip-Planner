@@ -10,7 +10,7 @@
   --glass-bg: rgba(18, 24, 33, 0.4);
 }
 
-/* 🔥 FIX 1: REMOVE ANY SIDE LINE POSSIBILITY */
+/* REMOVE ANY SIDE LINE POSSIBILITY */
 body {
   margin: 0;
   padding: 0;
@@ -26,15 +26,13 @@ body {
       #eef6f8 100%);
 
   background-attachment: scroll;
-  /* 👈 ADD HERE */
+ 
 
   scroll-behavior: smooth;
   font-feature-settings: "salt" on, "subs" on;
 }
 
 @layer utilities {
-
-  /* --- EXISTING CODE UNTOUCHED --- */
 
   .container-items {
     display: flex;
@@ -83,8 +81,6 @@ body {
     z-index: 50;
     opacity: 0.95;
   }
-
-  /* --- GLASS UI (UNCHANGED) --- */
 
   .engine-container {
     position: relative;
@@ -162,7 +158,6 @@ body {
     text-transform: uppercase;
   }
 
-  /* --- SPINNER --- */
 
   .spinner {
     width: 20px;
@@ -180,17 +175,15 @@ body {
   }
 }
 
-/* ========================================= */
-/* 🔥 FINAL FIX: PERFECT PAGE MERGE */
-/* ========================================= */
+/*  PERFECT PAGE MERGE */
 
 .itinerary-bg {
   position: relative;
 
-  /* 🔥 PERFECT CONTINUATION — SAME CURVE AS BODY */
+  /*SAME CURVE AS BODY */
   background: linear-gradient(to bottom,
       #dff4f6 0%,
-      /* EXACT match where previous ends */
+  
       #e4f7f9 20%,
       #eaf9fb 40%,
       #f2fbfc 60%,
@@ -231,7 +224,7 @@ body {
   box-shadow: 0 0 10px rgba(59, 164, 166, 0.2);
 }
 
-/* BUTTON (UNCHANGED STYLE) */
+/* BUTTON  */
 .submit-btn {
   width: 100%;
   padding: 18px;
@@ -246,4 +239,17 @@ body {
 .submit-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(59, 164, 166, 0.3);
+}
+
+.submit-btn:hover {
+  opacity: 0.88;
+}
+
+.submit-btn:active {
+  transform: scale(0.98);
+}
+
+.submit-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
 }

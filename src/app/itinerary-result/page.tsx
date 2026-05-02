@@ -44,14 +44,7 @@ export default function ItineraryResultPage() {
 
       {/* Content Layer */}
       <div className="relative z-10 p-4 md:p-12">
-        <div className="max-w-4xl mx-auto flex flex-col items-center">
-          
-        <div className="w-full flex justify-start">
-
-{/* TOP HEADER BAR */}
-<div className="w-full flex items-center justify-between bg-white/10 backdrop-blur-xl px-8 py-4 rounded-2xl border border-white/20 text-white shadow-[0_8px_32px_0_rgba(0,0,0,0.3)]">
-  
-  {/* 1. Plan Another Adventure Button */}
+                            {/* 1. Plan Another Adventure Button */}
   <button 
     onClick={() => router.push('/')}
     className="group flex items-center gap-2 bg-white/10 backdrop-blur-xl px-5 py-2.5 rounded-xl font-medium border border-white/20 text-white hover:bg-white hover:text-black hover:scale-105 transition-all duration-300 shadow-lg shrink-0"
@@ -59,6 +52,14 @@ export default function ItineraryResultPage() {
     <ArrowLeft size={18} className="group-hover:-translate-x-1 transition-transform duration-300" />
     <span className="text-sm tracking-wide">Plan Another Adventure</span>
   </button>
+  
+        <div className="max-w-4xl mx-auto flex flex-col items-center">   
+        <div className="w-full flex justify-start">
+  
+{/* TOP HEADER BAR */}
+<div className="w-full flex items-center justify-between flex-wrap md:flex-nowrap bg-white/10 backdrop-blur-xl px-4 md:px-8 py-4 rounded-2xl border border-white/20 text-white shadow-lg gap-4">
+  
+  
 
   {/* 2. Destination */}
   <div className="flex items-center gap-3 border-l border-white/10 pl-6">
