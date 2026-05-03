@@ -226,7 +226,7 @@ export const ItineraryDisplay = ({ result, resultsRef }: Props) => {
                       <div style={{ background: 'rgba(0,0,0,0.25)', borderTop: '1px solid rgba(255,255,255,0.1)', padding: '10px 18px', display: 'flex', gap: 16, flexWrap: 'wrap' }}>
                         {[['💰 Total', day.budget.total], ['🍽 Food', day.budget.food], ['🚌 Travel', day.budget.travel], ['🏨 Stay', day.budget.stay]].map(([k, v]: any) => (
                           <div key={k} style={{ fontSize: 12, color: 'rgba(255,255,255,0.65)' }}>
-                            <strong style={{ color: '#fff' }}>{k}:</strong> ₹{(v || 0).toLocaleString('en-IN')}
+                            <strong style={{ color: '#fff' }}>{k}:</strong> {(v || 0).toLocaleString('en-IN')}
                           </div>
                         ))}
                       </div>
