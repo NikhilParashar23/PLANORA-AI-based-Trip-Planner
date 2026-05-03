@@ -158,3 +158,4 @@ Ensure all 1200+ frames are correctly named for the CanvasScroller to work smoot
 
 -Nikhil Parashar
 -Snigdha Raibagkar
+-Harshit Singh
