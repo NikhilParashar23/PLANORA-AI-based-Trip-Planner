@@ -49,7 +49,7 @@ export async function POST(request: Request) {
       3. PRICING: All budget estimates must be current for 2026.
       4. DIETARY: If user is "Vegetarian", do not suggest a famous Steakhouse even if it has a salad. Suggest a top-rated Veg restaurant.
       5. EXPERIENCE: If style is "Adventure", include trekking/water sports. If "Relax", include spas/cafes/viewpoints.
-
+      
       - WEATHER CONTEXT: ${weatherContext}
 - LOGISTICS: 
   Start Point: ${from}
@@ -106,7 +106,7 @@ RULES:
             "lunch": ["Restaurant — Recommendation"],
             "dinner": ["Restaurant — Recommendation"],
             "stay": ["Hotel Name — ₹Price, USP"],
-            "transport": "Logistical advice",
+            "transport": "Specific logistical advice (e.g. Uber, Metro Line 2, or Bike Rent)",
             "budget": { "food": 0, "travel": 0, "stay": 0, "total": 0 }
           }
         ]
