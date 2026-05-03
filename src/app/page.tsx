@@ -50,13 +50,17 @@ export default function Home() {
 
       {/* Static Sections */}
       <div className="relative z-30">
-        <HowItWorks />
+        <section id="features" className="scroll-mt-24">
+          <HowItWorks />
+        </section>
 
-        <div className="text-white">
+        <section id="itinerary" className="bg-white scroll-mt-24">
           <ItineraryEngine />
-        </div>
+        </section>
 
-        <Footer />
+        <section id="about">
+          <Footer />
+        </section>
       </div>
     </main>
   );

@@ -20,9 +20,9 @@ export const Footer = () => {
                     <h4 className="text-sm uppercase tracking-[0.2em] font-bold mb-6 text-zinc-200">Quick Links</h4>
                     <ul className="space-y-3 text-base text-zinc-400">
                         <li><a href="#" className="hover:text-white transition-colors duration-300">Home</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">How It Works</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">Plan My Trip</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="#features" className="hover:text-white transition-colors duration-300">How It Works</a></li>
+                        <li><a href="#itinerary" className="hover:text-white transition-colors duration-300">Plan My Trip</a></li>
+                        <li><a href="#about" className="hover:text-white transition-colors duration-300">Contact Us</a></li>
                     </ul>
                 </div>
 
@@ -30,10 +30,10 @@ export const Footer = () => {
                 <div>
                     <h4 className="text-sm uppercase tracking-[0.2em] font-bold mb-6 text-zinc-200">Features</h4>
                     <ul className="space-y-3 text-base text-zinc-400">
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">AI Planner</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">Budget Optimization</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">Hotel Selection</a></li>
-                        <li><a href="#" className="hover:text-white transition-colors duration-300">Route Mapping</a></li>
+                        <li><a href="#features" className="hover:text-white transition-colors duration-300">AI Planner</a></li>
+                        <li><a href="#features" className="hover:text-white transition-colors duration-300">Budget Optimization</a></li>
+                        <li><a href="#features" className="hover:text-white transition-colors duration-300">Hotel Selection</a></li>
+                        <li><a href="#features" className="hover:text-white transition-colors duration-300">Route Mapping</a></li>
                     </ul>
                 </div>
 
@@ -45,9 +45,9 @@ export const Footer = () => {
                             <span>📧</span> hello@planora.in
                         </li>
                         <li>
-                            <a href="https://instagram.com/planora" target="_blank" className="flex items-center gap-2 hover:text-white transition-colors">
+                           
                                 <span>📸</span> @planora
-                            </a>
+                            
                         </li>
                         <li className="flex items-center gap-2">
                             <span>🌐</span> India
