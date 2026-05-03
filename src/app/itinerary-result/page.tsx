@@ -1,13 +1,16 @@
 "use client";
 import React, { useEffect, useState, useRef} from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, Plane, MapPin, Calendar, Clock,IndianRupee } from 'lucide-react';
+import { ArrowLeft, Plane, MapPin, Calendar, Clock,IndianRupee, Download } from 'lucide-react';
 import { ItineraryDisplay } from '@/components/sections/ItineraryDisplay';
+import html2canvas from 'html2canvas';
+import jsPDF from 'jspdf';
 
 export default function ItineraryResultPage() {
   const router = useRouter();
   const [data, setData] = useState<any>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
+  const pdfRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // 1. Get data from storage
@@ -21,6 +24,50 @@ export default function ItineraryResultPage() {
     
     setData(JSON.parse(savedData));
   }, [router]);
+
+ const downloadPDF = async () => {
+  const element = pdfRef.current;
+  if (!element) return;
+
+  try {
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      logging: false,
+      windowHeight: element.scrollHeight,
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    
+    // PDF Page Dimensions (A4)
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+    
+    // Calculate how high the image is relative to the PDF width
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+    
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // Page 1
+    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+
+    // Add more pages if the itinerary is longer than one page
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+    }
+
+    pdf.save(`${data.destination}-itinerary.pdf`);
+  } catch (error) {
+    console.error("PDF Generation Error:", error);
+  }
+};
 
   // Loading state while checking session storage
   if (!data) return (
@@ -53,7 +100,7 @@ export default function ItineraryResultPage() {
     <span className="text-sm tracking-wide">Plan Another Adventure</span>
   </button>
   
-        <div className="max-w-4xl mx-auto flex flex-col items-center">   
+        <div ref={pdfRef} className="max-w-4xl mx-auto flex flex-col items-center">   
         <div className="w-full flex justify-start">
   
 {/* TOP HEADER BAR */}
@@ -111,7 +158,26 @@ export default function ItineraryResultPage() {
           <ItineraryDisplay result={data} />
           
         </div>
+                   <button 
+              onClick={downloadPDF}
+               className="group flex items-center gap-2 bg-white/10 backdrop-blur-xl px-5 py-2.5 rounded-xl font-medium border border-white/20 text-white hover:bg-white hover:text-black hover:scale-105 transition-all duration-300 shadow-lg shrink-0"
+            >
+              <Download size={18} className="group-hover:-translate-x-1 transition-transform duration-300" />
+              <span className="text-sm tracking-wide">Download as PDF</span>
+            </button>
       </div>
     </main>
+  );
+}
+
+function InfoBlock({ label, value, icon }: { label: string, value: string, icon: React.ReactNode }) {
+  return (
+    <div className="flex flex-col gap-1">
+      <div className="flex items-center gap-2 text-zinc-500">
+        {icon}
+        <p className="text-[10px] uppercase font-bold tracking-tight">{label}</p>
+      </div>
+      <p className="text-sm font-semibold text-zinc-900">{value}</p>
+    </div>
   );
 }

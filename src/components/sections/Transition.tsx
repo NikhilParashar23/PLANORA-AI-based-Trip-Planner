@@ -4,7 +4,7 @@ import React from 'react';
 export const Transition = () => {
   return (
     <div
-      id="transition-end"   // 👈 THIS LINE IS THE FIX
+      id="transition-end"   
       className="flex flex-col items-center justify-center min-h-screen text-white text-center px-4 mix-blend-difference"
     >
       <h2 className="font-serif tracking-[0.2em] uppercase text-4xl md:text-6xl mb-8">

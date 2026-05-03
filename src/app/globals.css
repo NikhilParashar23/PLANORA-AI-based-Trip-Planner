@@ -224,21 +224,39 @@ body {
   box-shadow: 0 0 10px rgba(59, 164, 166, 0.2);
 }
 
-/* BUTTON  */
-.submit-btn {
-  width: 100%;
-  padding: 18px;
-  border-radius: 14px;
-  font-weight: 600;
-  background: linear-gradient(90deg, #3BA4A6, #1E5F74);
-  color: white;
-  margin-top: 20px;
-  transition: 0.3s;
+/* train animation */
+@keyframes train-chug {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50% { transform: scaleX(-1) translateY(-2px); }
 }
 
-.submit-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 25px rgba(59, 164, 166, 0.3);
+@keyframes track-slide {
+  from { background-position: 0 0; }
+  to { background-position: -20px 0; }
+}
+
+.submit-btn {
+  width: 100%;
+  margin-top: 1.5rem;
+  background: #0e6b9e;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 20px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: opacity 0.2s, transform 0.15s;
+  
+  /* Critical for centering the animation */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50px; 
+  position: relative;
+  overflow: hidden;
 }
 
 .submit-btn:hover {
@@ -249,9 +267,35 @@ body {
   transform: scale(0.98);
 }
 
-.submit-btn:disabled {
-  opacity: 0.55;
-  cursor: not-allowed;
+.train-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.train-group {
+  display: flex;
+  flex-direction: row-reverse; 
+  align-items: center;
+  font-size: 24px;
+  line-height: 1;
+  transform: scaleX(-1); 
+  animation: train-chug 0.4s infinite ease-in-out;
+}
+
+.track-line {
+  width: 100px;
+  height: 2px;
+  margin-top: -2px; 
+  background-image: linear-gradient(to right, rgba(255,255,255,0.7) 50%, transparent 50%);
+  background-size: 10px 2px;
+  animation: track-slide 0.2s infinite linear;
+}
+
+.flip-horizontal {
+  transform: scaleX(-1);
+  display: inline-block; 
 }
 
 html {
@@ -259,5 +303,5 @@ html {
 }
 
 .scroll-mt-24 {
-  scroll-margin-top: 0rem; /* 96px - adjust based on your navbar padding */
+  scroll-margin-top: 0rem; 
 }

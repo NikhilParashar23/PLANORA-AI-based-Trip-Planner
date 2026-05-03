@@ -14,7 +14,7 @@ export const Navbar = () => {
             const rect = transitionEl.getBoundingClientRect();
 
             /**
-             * 🔥 SYNC LOGIC:
+             *  SYNC LOGIC:
              * rect.top is the distance from the top of the viewport to the element.
              * window.innerHeight is the height of the screen.
              * We show the navbar when the transition text is roughly 80% up the screen.

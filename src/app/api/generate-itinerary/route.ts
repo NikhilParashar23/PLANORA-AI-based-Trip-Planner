@@ -163,7 +163,7 @@ const dayImagePromises = itinerary.days.map(async (day, index) => {
     return img;
   } catch (err) {
 
-    return `https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?sig=${index}`;
+    return `https://unsplash.com/photos/black-dslr-camera-near-passport-98WPMlTl5xo`;
   }
 });
 

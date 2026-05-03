@@ -310,7 +310,7 @@ const budgetValue = watch('budget');
                       type="button"
                       onClick={() => toggleStyle(s)}
                       style={{
-                        /* ✅ FIXED WIDTH FOR SCROLL */
+                        /*FIXED WIDTH FOR SCROLL */
                         minWidth: '84px',
                         height: '84px',
                         flexShrink: 0,
@@ -500,17 +500,35 @@ const budgetValue = watch('budget');
 
             </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="submit-btn"
-              style={{
-                marginTop: '2rem',
-                fontSize: '16px'
-              }}
-            >
-              {loading ? 'Planning...' : '✈ Design My Journey'}
-            </button>
+<button
+    
+      disabled={loading}
+      className="submit-btn"
+    >
+      {loading ? (
+        <div className=" train-wrapper ">
+          
+          {/* The Entire Train (Engine + Boxes) */}
+          <div className="train-group flip-horizontal">
+            <span>🚂</span>
+            <span style={{ marginLeft: '-4px' }}>🚃</span>
+            <span style={{ marginLeft: '-4px' }}>🚃</span>
+            <span style={{ marginLeft: '-4px' }}>🚃</span>
+          </div>
+
+          {/* The Track (Locked directly under the train) */}
+         <div className="track-line" />
+
+          {/* Status Text */}
+          <span className="text-[10px] uppercase tracking-[0.2em] mt-2 opacity-90 font-bold">
+           Designing your itinerary...
+          </span>
+          
+        </div>
+      ) : (
+        <span className="text-lg">Plan my journey</span>
+      )}
+    </button>
 
           </form>
         </div>

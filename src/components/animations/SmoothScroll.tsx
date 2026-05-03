@@ -5,7 +5,7 @@ import { ReactLenis } from 'lenis/react';
 export function SmoothScroll({ children }: { children: React.ReactNode }) {
   return (
     <ReactLenis root options={{
-      lerp: 0.08, // Slightly lower value (0.08) makes the scroll feel "heavier" and more cinematic
+      lerp: 0.08, 
       duration: 1.2,
       smoothWheel: true
     }}>
