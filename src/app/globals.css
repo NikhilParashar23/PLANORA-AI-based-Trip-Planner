@@ -253,3 +253,11 @@ body {
   opacity: 0.55;
   cursor: not-allowed;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-mt-24 {
+  scroll-margin-top: 0rem; /* 96px - adjust based on your navbar padding */
+}

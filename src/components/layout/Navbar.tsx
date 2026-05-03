@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-
+import {MapPinned} from "lucide-react"
 export const Navbar = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [isScrolled, setIsScrolled] = useState(false);
@@ -59,9 +59,11 @@ export const Navbar = () => {
         >
             {/* LOGO */}
             <div className="flex items-center gap-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-[#3BA4A6] to-[#7ED7C1] rounded-lg shadow-[0_0_15px_rgba(59,164,166,0.3)]" />
+                <div className="w-8 h-8 bg-gradient-to-br from-[#3BA4A6] to-[#7ED7C1] rounded-lg shadow-[0_0_15px_rgba(59,164,166,0.3)] flex items-center justify-center">
+  <MapPinned size={18} className="text-white" />
+</div>
                 <span className="text-xl font-serif font-bold tracking-tighter text-white uppercase">
-                    Plan<span className="text-[#3BA4A6]">ora</span>
+                    Plan<span className="text-[#3BA4A6] ">ora</span>
                 </span>
             </div>
 

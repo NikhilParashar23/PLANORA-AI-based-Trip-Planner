@@ -132,34 +132,38 @@ RULES:
       throw new Error("AI generated an invalid JSON format.");
     }
 
-     const dayImagePromises = itinerary.days.map(async (day: any) => {
- const allPlaces = [
+// 1. Create a Set to track used search queries to prevent repeats
+const usedQueries = new Set();
+
+const dayImagePromises = itinerary.days.map(async (day, index) => {
+  const allPlaces = [
     ...(day.morning || []),
     ...(day.midday || []),
     ...(day.evening || []),
-    data.destination 
   ];
 
-  // 2. Clean the strings and filter out empty values
- const cleanPlaces = allPlaces
-  .map(p => {
-    if (!p) return null;
-    if (typeof p === 'string') return p.split(' — ')[0];
-    return p.name; // This will now catch the { name, description } objects
-  })
-  .filter(Boolean);
+  const cleanPlaces = allPlaces
+    .map(p => {
+      if (!p) return null;
+      const name = typeof p === 'string' ? p.split(' — ')[0] : p.name;
+      return name !== data.destination ? name : null;
+    })
+    .filter(Boolean);
 
-  // 3. Pick a random place from this day's list to ensure variety
-  const randomPlace = cleanPlaces[Math.floor(Math.random() * cleanPlaces.length)];
-  
-  // 4. Construct the search query
-  const searchQuery = `${data.destination} ${randomPlace} landscape scenic travel`;
- try {
+  let randomPlace = cleanPlaces.find(p => !usedQueries.has(p)) || cleanPlaces[0] || data.destination;
+  usedQueries.add(randomPlace);
+
+  const searchQuery = `${randomPlace} ${data.destination} travel photography day ${index + 1}`;
+
+  try {
     const img = await getImage(searchQuery);
+    
+    if (!img) throw new Error("No image found");
+    
     return img;
   } catch (err) {
-    // Fallback image if one specific search fails
-    return "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800";
+
+    return `https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?sig=${index}`;
   }
 });
 

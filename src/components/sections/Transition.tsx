@@ -12,7 +12,9 @@ export const Transition = () => {
       </h2>
 
       <button className="px-8 py-4 border border-white text-white font-sans text-sm tracking-widest uppercase hover:bg-accent hover:border-accent transition-colors duration-500 rounded-sm">
-        Start Your Journey
+        <a href="#itinerary" className="text-white no-underline">
+          Start Your Journey
+        </a>
       </button>
     </div>
   );
